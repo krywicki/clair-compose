@@ -1,0 +1,14 @@
+version: '3'
+services:
+  clair-db:
+    image: "arminc/clair-db:latest"
+    ports:
+      - "5432:5432"
+  clair:
+    image: "arminc/clair-local-scan:latest"
+    depends_on:
+      - clair-db
+    links:
+      - "clair-db:postgres"
+    ports:
+        - "6060:6060"
