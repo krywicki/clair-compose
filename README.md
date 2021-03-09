@@ -31,20 +31,8 @@ Run clair appropriate downloader to install ```clair-scanner``` for your target 
 
 ## Running Clair-Scanner
 
-To run the clair-scanner, do the following steps.
+Run ```scan.sh``` on target image.
 
-1. Ensure that the target image exists, whether locally or remotely.
-
-2. Start clair db resources with ```docker-compose```
-
-    ```bash
-    docker-compose up -d
-    ```
-
-3. Initiate scan on a target image.
-
-    * This example uses ```alpine:3.5``` as the target image.
-
-    ```bash
-    ./clair-scanner alpine:3.5
-    ```
+```bash
+./scan.sh alpine:3.5
+```
