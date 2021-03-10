@@ -16,7 +16,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Download complete!"
     fi
 
-    #EXTRA_ARGS="--ip host.docker.internal"
     EXTRA_ARGS="--ip $(hostname)"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
