@@ -16,7 +16,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Download complete!"
     fi
 
-    EXTRA_ARGS="--ip host.docker.internal"
+    #EXTRA_ARGS="--ip host.docker.internal"
+    EXTRA_ARGS="--ip $(hostname)"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "Host: Linux-GNU"
@@ -26,6 +27,8 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         chmod +x "./clair-scanner"
         echo "Download complete!"
     fi
+
+    EXTRA_ARGS="--ip $(hostname)"
 else
     $(exit unsupported os type: $OSTYPE)
 fi
