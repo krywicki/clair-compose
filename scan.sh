@@ -3,14 +3,33 @@
 # This performs clair-scan on target image
 
 IMAGE=$1
-LOG_FILE="scan.log"
+SCANNER_VER=v12
+EXTRA_ARGS=""
 
-# Run on MAC
-if [[ -f "clair-scanner-mac" ]]; then
-    IP_ADDR=$(ipconfig getifaddr en0)
-    docker-compose up -d
-    ./clair-scanner-mac --ip $IP_ADDR -l $LOG_FILE "$IMAGE"
-    docker-compose down
-# Could not identify distribution
-else echo "Could not locate clair-scanner executable. Make sure it's downloaded"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Host: Mac OS"
+
+    if [[ ! -f "clair-scanner" ]]; then
+        echo "Downloading clair-scanner_darwin_amd64"
+        curl -L "https://github.com/arminc/clair-scanner/releases/download/${SCANNER_VER}/clair-scanner_darwin_amd64" -o "clair-scanner"
+        chmod +x "./clair-scanner"
+        echo "Download complete!"
+    fi
+
+    EXTRA_ARGS="--ip host.docker.internal"
+
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo "Host: Linux-GNU"
+    if [[ ! -f "clair-scanner" ]]; then
+        echo "Downloading clair-scanner_linux_amd64"
+        curl -L "https://github.com/arminc/clair-scanner/releases/download/${SCANNER_VER}/clair-scanner_linux_amd64" -o "clair-scanner"
+        chmod +x "./clair-scanner"
+        echo "Download complete!"
+    fi
+else
+    $(exit unsupported os type: $OSTYPE)
 fi
+
+docker-compose up -d
+./clair-scanner $EXTRA_ARGS $IMAGE
+docker-compose down

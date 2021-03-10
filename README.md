@@ -3,35 +3,16 @@
 This is a simple project that simplifies using ```clair``` vulnerability scanner by using
 ```docker-compose``` to run it.
 
-## Setup
+## Running
 
-This section is how to install clair and associated tools.
-
-**Requirements**
+**Ensure you have the follwing already installed**
 * Docker
+* Docker-Compose
 
-Run clair appropriate downloader to install ```clair-scanner``` for your target OS.
+Make sure the docker images are present either using ```docker build``` or ```docker pull```.
 
-* Mac
-
-    ```bash
-    ./mac-download-clair.sh
-    ```
-* Linux
-
-    ```bash
-    TODO
-    ```
-* Windows
-
-    ```bash
-    TODO
-    ```
-
-
-## Running Clair-Scanner
-
-Run ```scan.sh``` on target image.
+To scan an image, simply run ```./scan.sh <image>```.
+Here's an example of scanning ```alpine:3.5```:
 
 ```bash
 ./scan.sh alpine:3.5
